@@ -221,14 +221,6 @@ export default function Home() {
               <div><strong>10</strong><span>Minutes a Day</span></div>
               <div><strong>01</strong><span>Better You</span></div>
             </div>
-
-            <div className="hero-preview">
-              <img src={photos.cover} alt="Prnni’s Diary 90-day guided personal growth journal cover" />
-              <div>
-                <span>ONE BEAUTIFUL BEGINNING</span>
-                <p>One day. One page. One promise to yourself.</p>
-              </div>
-            </div>
           </div>
 
           <div className="hero-form-column" data-aos="fade-up">
@@ -264,7 +256,7 @@ export default function Home() {
         <div className="container about-layout">
           <div className="about-image" data-aos="fade-up">
             <img
-              src={photos.story}
+              src="/images/heart behind.png"
               alt="The story behind Prnni’s Diary"
               loading="lazy"
             />
@@ -441,7 +433,7 @@ export default function Home() {
           <div className="inside-photos" data-aos="fade-up">
             <div className="inside-photo first">
               <img
-                src={photos.daily}
+                src="/images/daily.png"
                 alt="Prnni’s Diary daily timetable and goal setting page"
                 loading="lazy"
               />
@@ -449,7 +441,7 @@ export default function Home() {
 
             <div className="inside-photo second">
               <img
-                src={photos.students}
+                src="/images/sharp mind.png"
                 alt="Prnni’s Diary student planning and reflection page"
                 loading="lazy"
               />
@@ -541,10 +533,10 @@ export default function Home() {
 
           <div className="gallery-grid">
             {[
-              { image: photos.story, title: "The Heart Behind Prnni" },
-              { image: photos.children, title: "For Little Dreamers" },
-              { image: photos.students, title: "For Focused Minds" },
-              { image: photos.daily, title: "Daily Planning" },
+              { image: "/images/heart behind.png", title: "The Heart Behind Prnni" },
+              { image: "/images/little dreamer.png", title: "For Little Dreamers" },
+              { image: "/images/sharp mind.png", title: "For Focused Minds" },
+              { image: "/images/daily.png", title: "Daily Planning" },
             ].map((item, index) => (
               <article className="gallery-card" data-aos="fade-up" data-aos-delay={(index % 4) * 70} key={item.title}>
                 <div className="gallery-image">
