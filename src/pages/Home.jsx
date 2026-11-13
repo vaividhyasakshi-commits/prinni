@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 
 import PreBookingForm from "../components/PreBookingForm";
+import { publicUrl } from "../publicUrl";
 
 const photos = {
   cover: "/images/prnni-cover.jpg",
@@ -256,7 +257,7 @@ export default function Home() {
         <div className="container about-layout">
           <div className="about-image" data-aos="fade-up">
             <img
-              src="/images/heart behind.png"
+              src={publicUrl("/images/heart behind.png")}
               alt="The story behind Prnni’s Diary"
               loading="lazy"
             />
@@ -433,7 +434,7 @@ export default function Home() {
           <div className="inside-photos" data-aos="fade-up">
             <div className="inside-photo first">
               <img
-                src="/images/daily.png"
+                src={publicUrl("/images/daily.png")}
                 alt="Prnni’s Diary daily timetable and goal setting page"
                 loading="lazy"
               />
@@ -441,7 +442,7 @@ export default function Home() {
 
             <div className="inside-photo second">
               <img
-                src="/images/sharp mind.png"
+                src={publicUrl("/images/sharp mind.png")}
                 alt="Prnni’s Diary student planning and reflection page"
                 loading="lazy"
               />
@@ -533,10 +534,10 @@ export default function Home() {
 
           <div className="gallery-grid">
             {[
-              { image: "/images/heart behind.png", title: "The Heart Behind Prnni" },
-              { image: "/images/little dreamer.png", title: "For Little Dreamers" },
-              { image: "/images/sharp mind.png", title: "For Focused Minds" },
-              { image: "/images/daily.png", title: "Daily Planning" },
+              { image: publicUrl("/images/heart behind.png"), title: "The Heart Behind Prnni" },
+              { image: publicUrl("/images/little dreamer.png"), title: "For Little Dreamers" },
+              { image: publicUrl("/images/sharp mind.png"), title: "For Focused Minds" },
+              { image: publicUrl("/images/daily.png"), title: "Daily Planning" },
             ].map((item, index) => (
               <article className="gallery-card" data-aos="fade-up" data-aos-delay={(index % 4) * 70} key={item.title}>
                 <div className="gallery-image">

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ArrowUpRight, Menu, X, Sparkles } from "lucide-react";
+import { publicUrl } from "../publicUrl";
 
 const navItems = [
   { name: "Home", path: "/#home" },
@@ -33,7 +34,7 @@ export default function Header() {
             className="site-logo"
             onClick={() => setOpen(false)}
           >
-            <img src="/images/logo.png" alt="Prnni’s Diary — home" width="180" height="60" />
+            <img src={publicUrl("/images/logo.png")} alt="Prnni’s Diary — home" width="180" height="60" />
           </Link>
 
           <nav className={`nav-menu ${open ? "open" : ""}`}>

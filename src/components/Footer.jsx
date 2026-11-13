@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, CalendarDays, Heart } from "lucide-react";
+import { publicUrl } from "../publicUrl";
 
 const exploreLinks = [
   ["Home", "/#home"],
@@ -23,7 +24,7 @@ export default function Footer() {
       <div className="container footer-main">
         <div className="footer-brand">
           <Link to="/#home" className="footer-logo">
-            <img src="/images/logo.png" alt="Prnni’s Diary — home" width="180" height="60" />
+            <img src={publicUrl("/images/logo.png")} alt="Prnni’s Diary — home" width="180" height="60" />
           </Link>
 
           <p>

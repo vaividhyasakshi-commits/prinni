@@ -60,4 +60,4 @@ function SiteRoutes(){
  useEffect(()=>{if(!admin)return;const m=document.createElement('meta');m.name='robots';m.content='noindex,nofollow';document.head.append(m);return()=>m.remove();},[admin]);
  return <><ScrollManager />{!admin&&<Header/>}<Routes><Route path="/" element={<main><Home/></main>}/><Route path="/blog" element={<main><Blog/></main>}/><Route path="/blog/:slug" element={<main><BlogDetail/></main>}/><Route path="/admin-panel" element={<BlogAdmin/>}/><Route path="*" element={<main><Home/></main>}/></Routes>{!admin&&<Footer/>}</>;
 }
-export default function App(){return <BrowserRouter><SiteRoutes/></BrowserRouter>}
+export default function App(){return <BrowserRouter basename={import.meta.env.BASE_URL}><SiteRoutes/></BrowserRouter>}

@@ -1,3 +1,5 @@
+import { publicUrl } from "./publicUrl";
+
 export async function blogApi(
   action,
   { params = {}, body, csrf } = {}
@@ -5,7 +7,7 @@ export async function blogApi(
   // PUBLIC BLOGS — NO PHP BACKEND REQUIRED
 
   if (action === "list" || action === "post") {
-    const response = await fetch("/data/blogs.json", {
+    const response = await fetch(publicUrl("/data/blogs.json"), {
       cache: "no-cache",
     });
 
@@ -15,11 +17,20 @@ export async function blogApi(
       );
     }
 
-    const posts = await response.json();
+    const data = await response.json();
 
-    if (!Array.isArray(posts)) {
+    if (!Array.isArray(data)) {
       throw new Error("Invalid blog data");
     }
+
+    const posts = data.map((post) => ({
+      ...post,
+      image: publicUrl(post.image || ""),
+      content: (post.content || "").replace(
+        /(src\s*=\s*["'])(\/images\/)/g,
+        (_, attribute, imagePath) => `${attribute}${publicUrl(imagePath)}`
+      ),
+    }));
 
     if (action === "list") {
       return posts.map(({ content, ...summary }) => summary);
@@ -46,7 +57,7 @@ export async function blogApi(
   const form = body instanceof FormData;
 
   const response = await fetch(
-    `/api/blog.php?${query}`,
+    publicUrl(`/api/blog.php?${query}`),
     {
       credentials: "same-origin",
 
