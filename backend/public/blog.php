@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+require_once dirname(__DIR__).'/export-blogs.php';
 $dir=dirname(__DIR__).'/storage';
 if(!is_dir($dir)) mkdir($dir,0700,true);
 $media=$dir.'/media'; if(!is_dir($media)) mkdir($media,0700,true);
@@ -14,7 +15,7 @@ function out($data,$status=200){http_response_code($status);echo json_encode($da
 function fail($s,$code=400){out(['error'=>$s],$code);}
 function readBody(){ $raw=file_get_contents('php://input',false,null,0,2000001); if(strlen($raw)>2000000)fail('Request too large',413); $v=json_decode($raw,true);if(!is_array($v))fail('Invalid JSON');return $v; }
 function textField($d,$k,$max,$required=true){$v=$d[$k]??'';if(!is_string($v)||strlen($v)>$max||($required&&trim($v)===''))fail('Invalid '.$k);return trim($v);}
-function store($write,$fn){global $dir;$lock=fopen($dir.'/posts.lock','c');if(!$lock||!flock($lock,$write?LOCK_EX:LOCK_SH))fail('Storage unavailable',500);$file=$dir.'/posts.json';$posts=is_file($file)?json_decode(file_get_contents($file),true):[];if(!is_array($posts))fail('Storage damaged',500);$result=$fn($posts);if($write){$tmp=tempnam($dir,'posts-');if($tmp===false||file_put_contents($tmp,json_encode($posts,JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR))===false||!rename($tmp,$file))fail('Unable to save',500);}flock($lock,LOCK_UN);fclose($lock);return $result;}
+function store($write,$fn){global $dir;$lock=fopen($dir.'/posts.lock','c');if(!$lock||!flock($lock,$write?LOCK_EX:LOCK_SH))fail('Storage unavailable',500);$file=$dir.'/posts.json';$posts=is_file($file)?json_decode(file_get_contents($file),true):[];if(!is_array($posts))fail('Storage damaged',500);$result=$fn($posts);if($write){$tmp=tempnam($dir,'posts-');if($tmp===false||file_put_contents($tmp,json_encode($posts,JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR))===false||!rename($tmp,$file))fail('Unable to save',500);try{exportPublishedBlogs($posts);}catch(Throwable $e){error_log($e->getMessage());fail('Private data saved, but public export failed. Run backend/export-blogs.php to retry.',500);}}flock($lock,LOCK_UN);fclose($lock);return $result;}
 function published($p){return $p['status']==='published';}
 function summaries($posts){usort($posts,fn($a,$b)=>strcmp($b['publishedAt']??$b['createdAt'],$a['publishedAt']??$a['createdAt']));return array_map(function($p){unset($p['content']);return $p;},$posts);}
 if($action==='list'){out(store(false,fn($p)=>summaries(array_values(array_filter($p,'published')))));}
